@@ -1,0 +1,15 @@
+This file shortly describes the differences between the pyebrook implementation and this project.
+
+MainActivity:
+ *) Uses code from the file called hxmDemo.java (in pyebrook project)
+ *) Moved display HrmReading functionality from the HrmReading class into MainActivity.
+ +) Added functionality for storing data from Zephyr HxM BT as a file in the external storage. 
+
+HrmReading:
+ *) Moved the HrmReading class to a separate file.
+ *) Removed display functionality from HrmReading class, which is now handled by the activity class (MainActivity).
+ *) Added a toString() method, which returns the HrmReading in CSV format.
+ 
+-----------------------------------------------------
+ * : Changes related to the pyebrook implementation
+ + : Added features specific to this project
