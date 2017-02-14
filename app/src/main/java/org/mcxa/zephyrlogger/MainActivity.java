@@ -48,7 +48,6 @@
 
 package org.mcxa.zephyrlogger;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -57,11 +56,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +74,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Set;
 
-public class MainActivity extends Activity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends AppCompatActivity {
 
 	private Context mContext;
 	private boolean isRecording=false;
@@ -88,8 +91,8 @@ public class MainActivity extends Activity {
 	/*
 	 *  Layout Views
 	 */
-	private TextView mTitle;
-	private TextView mStatus;
+	@BindView(R.id.status) TextView mStatus;
+	@BindView(R.id.toolbar) Toolbar toolbar;
 
 	/*
 	 * Name of the connected device, and it's address
@@ -228,35 +231,27 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.e(TAG, "onCreate");
+		Log.d(TAG, "onCreate");
 
 		mContext = getApplicationContext();
 
 		/*
-		 * Set up the window layout, we can use a cutom title, the layout
-		 * from our resource file
+		 * Set our content view
 		 */
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_main);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
+        //setup butterknife
+        ButterKnife.bind(this);
 
-		/*
-		 *  Set up the title text view, if we can't do it something is wrong with
-		 *  how this application package was built, in that case display a message
-		 *  and give up.        
-		 */
-		mTitle = (TextView) findViewById(R.id.title);
-		if ( mTitle == null ) {
-			Toast.makeText(this, "Something went very wrong, missing resource, rebuild the application", Toast.LENGTH_LONG).show();
-			finish();
-		}            
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+		// Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.app_name);
 
 		/*
 		 *  Set up the status text view, if we can't do it something is wrong with
 		 *  how this application package was built, in that case display a message
 		 *  and give up.        
 		 */
-		mStatus = (TextView) findViewById(R.id.status);
 		if ( mStatus == null ) {
 			Toast.makeText(this, "Something went very wrong, missing resource, rebuild the application", Toast.LENGTH_LONG).show();
 			finish();
@@ -266,7 +261,6 @@ public class MainActivity extends Activity {
 		 * Put some initial information into our display until we have 
 		 * something more interesting to tell the user about 
 		 */
-		mTitle.setText(R.string.app_name);
 		mStatus.setText(R.string.initializing);
 
 
@@ -422,8 +416,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.option_menu, menu);
+        getMenuInflater().inflate(R.menu.option_menu, menu);
 		return true;
 	}
 

@@ -6,7 +6,11 @@
     
     <string name="app_name">ZephyrLogger</string>
     <string name="menu_settings">Settings</string>
-    
+    <string name="menu_connect">Connect to HxM</string>
+    <string name="menu_activate">Activate/Deactivate recording</string>
+    <string name="menu_quit">Quit</string>
+
+
     <string name="notConnected">You are not connected to a Zephyr HxM</string>
     <string name="btNotEnabled">Bluetooth not enabled.</string>
     <string name="connecting">connecting...</string>

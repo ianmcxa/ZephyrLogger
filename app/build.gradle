@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "org.mcxa.zephyrlogger"
@@ -19,5 +20,7 @@ android {
 }
 
 dependencies {
-    compile files('libs/HxMBT.jar')
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }
