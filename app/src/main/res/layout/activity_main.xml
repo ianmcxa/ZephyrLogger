@@ -1,0 +1,779 @@
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content" android:orientation="vertical">
+
+        <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content" android:orientation="horizontal">
+          
+                <TextView 
+                        android:text="Status: " 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+          
+            <TextView android:id="@+id/status"
+                android:ellipsize="end"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
+                  
+        </LinearLayout>
+        
+        <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content" android:orientation="horizontal">
+
+                <TextView 
+                        android:text="  " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+        </LinearLayout>
+
+<TableLayout android:id="@+id/TableLayout01" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TableRow  android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <TextView 
+                        android:text="Heart Rate" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_gravity="center_vertical"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:id="@+id/heartRate" 
+                        android:textSize="30sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" android:text="00"/>        
+
+                <TextView 
+                        android:text="       " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+
+                <TextView 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:text="Heart Beat \nNumber" android:layout_height="fill_parent" android:layout_gravity="center_vertical"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"
+                        />
+                        
+                <TextView 
+                        android:text="~" 
+                        android:textSize="30sp"
+                        android:id="@+id/heartBeatNumber" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+                <TextView 
+                        android:text="Instantanious Speed" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:id="@+id/speed" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                                
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="Strides" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:id="@+id/strides" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+
+
+
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:text="Distance" 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:textSize="10sp"
+                        android:id="@+id/distance" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+
+                <TextView 
+                        android:text="       " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+
+                <TextView 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" android:text="Battery Charge"/>
+        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="~" 
+                        android:id="@+id/batteryChargeIndicator" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+
+
+        </TableRow>
+        
+        
+        
+        
+        
+        
+        
+        
+
+</TableLayout>
+
+
+        
+        
+
+<TableLayout android:id="@+id/TableLayout02" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical"><TextView android:textSize="10sp" android:text="  " android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="~" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="~" 
+                        android:id="@+id/hbTimestamp1" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="~" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="id.hbTimestamp2" 
+                        android:id="@+id/hbTimestamp2" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="Heart Beat Timestamp #3" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:textSize="10sp"
+                        android:id="@+id/hbTimestamp3" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:text="~" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:id="@+id/hbTimestamp4" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:text="Heart Beat Timestamp #5" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:id="@+id/hbTimestamp5" 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="Heart Beat Timestamp #6" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="~" 
+                        android:id="@+id/hbTimestamp6" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="Heart Beat Timestamp #7" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="~" 
+                        android:id="@+id/hbTimestamp7" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="Heart Beat Timestamp #8" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="~" 
+                        android:id="@+id/hbTimestamp8" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="Heart Beat Timestamp #9" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="~" 
+                        android:id="@+id/hbTimestamp9" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="Heart Beat Timestamp #10" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="~" 
+                        android:id="@+id/hbTimestamp10" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="Heart Beat Timestamp #11" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="~" 
+                        android:id="@+id/hbTimestamp11" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="Heart Beat Timestamp #12" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="~" 
+                        android:id="@+id/hbTimestamp12" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="Heart Beat Timestamp #13" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:textSize="10sp"
+                        android:id="@+id/hbTimestamp13" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:textSize="10sp"
+                        android:text="Heart Beat Timestamp #14" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:textSize="10sp"
+                        android:id="@+id/hbTimestamp14" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:text="Heart Beat Timestamp #15" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:id="@+id/hbTimestamp15" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+</TableLayout>
+
+
+<TableLayout android:id="@+id/TableLayout02" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
+
+<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="10sp" android:text="  " android:layout_width="wrap_content" android:layout_height="wrap_content" />
+</TableRow>
+
+        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:text="STX" 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" 
+                        android:textSize="10sp"
+                        />
+        
+                <TextView 
+                        android:text="  " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:textSize="10sp"
+                        android:id="@+id/stx" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+                <TextView android:text="  " android:textSize="10sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+                <TextView android:textSize="10sp" android:text="DLC" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        
+                <TextView android:text="  " android:textSize="10sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                        
+                <TextView android:text="~" android:id="@+id/dlc" android:textSize="10sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </TableRow>
+                        
+        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+                <TextView android:textSize="10sp" android:text="Firmware Version" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        
+                <TextView android:text="  " android:textSize="10sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                        
+                <TextView android:text="~" android:id="@+id/firmwareVersion" android:textSize="10sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />        
+
+                <TextView android:text="       " android:textSize="10sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+                <TextView android:textSize="10sp" android:text="MSG ID" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        
+                <TextView android:textSize="10sp" android:text="  " android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                        
+                <TextView android:textSize="10sp" android:text="~" android:id="@+id/msgId" android:layout_width="wrap_content" android:layout_height="wrap_content" />  
+
+        </TableRow>
+        
+        
+        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:text="Hardware ID" android:layout_width="wrap_content" android:textSize="10sp" android:layout_height="wrap_content" />
+        
+                <TextView android:textSize="10sp" android:text="  " android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                        
+                <TextView android:textSize="10sp" android:text="id.hardwareId" android:id="@+id/hardwareId" android:layout_width="wrap_content" android:layout_height="wrap_content" /> 
+
+                <TextView android:text="       " android:textSize="10sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+                <TextView android:textSize="10sp" android:text="Hardware Version" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        
+                <TextView android:textSize="10sp" android:text="  " android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                        
+                <TextView android:textSize="10sp" android:text="~" android:id="@+id/hardwareVersion" android:layout_width="wrap_content" android:layout_height="wrap_content" />        
+        </TableRow>
+        
+        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+                <TextView android:textSize="10sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Firmware ID"/>
+        
+                <TextView android:text="  " android:layout_width="wrap_content" android:textSize="10sp" android:layout_height="wrap_content" />
+                        
+                <TextView android:text="id.firmWareId" android:id="@+id/firmwareId" android:textSize="10sp" android:layout_width="wrap_content" android:layout_height="wrap_content" /> 
+
+                <TextView 
+                        android:text="  " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+
+                <TextView 
+                        android:text="CRC" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:textSize="10sp"
+                        android:id="@+id/crc" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+
+
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+                <TextView 
+                        android:text="ETX" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:id="@+id/etx" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+                </TableRow>     
+
+        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="10sp" android:text="  " android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </TableRow>
+
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:text="Reserved 1" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:textSize="10sp"
+                        android:id="@+id/reserved1" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+
+                <TextView 
+                        android:text="Reserved 2" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:id="@+id/reserved2" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+        </TableRow>
+        
+        
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:text="Reserved 3" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:id="@+id/reserved3" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                                
+                <TextView 
+                        android:text="Reserved 4" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:id="@+id/reserved4" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+                        
+        </TableRow>
+
+        <TableRow  android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView 
+                        android:text="Reserved 5" 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+        
+                <TextView 
+                        android:text="  " 
+                        android:layout_width="wrap_content" 
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"/>
+                        
+                <TextView 
+                        android:text="~" 
+                        android:textSize="10sp"
+                        android:id="@+id/reserved5" 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>  
+
+                <TextView 
+                        android:text="  " 
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"/>
+
+        </TableRow>
+                
+        </TableLayout>
+</LinearLayout>
+<!--  
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/hello_world" />
+
+</RelativeLayout>-->

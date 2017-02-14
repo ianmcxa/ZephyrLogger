@@ -1,0 +1,23 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "org.mcxa.zephyrlogger"
+        minSdkVersion 14
+        targetSdkVersion 25
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile files('libs/HxMBT.jar')
+}
