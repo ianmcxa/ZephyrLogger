@@ -117,9 +117,22 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	public File exportData(HrmReading m) {
-		// Get the directory for the user's downloads directory.
-		File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-		File file = new File(path, "Zephyr_"+recordingTag+"_data.txt");
+		// Create a ZephyrLogs folder in external storage if it doesn't already exist
+		File zephyrlogFolder = new File(Environment.getExternalStorageDirectory(), "ZephyrLogs");
+
+        boolean dirExists = zephyrlogFolder.exists();
+        //if the directory doesn't exist, create it
+        if (!dirExists) {
+            dirExists = zephyrlogFolder.mkdirs();
+            //if it still doesn't exist, give up and exit
+            if (!dirExists) {
+                Log.e(TAG, "Could not create ZephyrLogs directory.");
+                System.exit(1);
+            }
+        }
+
+        //create a data file and write into it
+		File file = new File(zephyrlogFolder, "Zephyr_"+recordingTag+"_data.txt");
 		try {
 			if(!file.exists()){
 				file.createNewFile();
@@ -129,12 +142,15 @@ public class MainActivity extends AppCompatActivity {
 			writer.close();
 		} catch (FileNotFoundException e) {
 			Log.e(TAG, "Could not create logging file");
+            e.printStackTrace();
 			System.exit(1);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+            System.exit(1);
 		} catch (IOException e) {
             Log.e(TAG, "IO Exception trying to write to data file");
+            e.printStackTrace();
             System.exit(1);
 		}
 		return file;
