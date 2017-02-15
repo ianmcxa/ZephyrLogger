@@ -434,10 +434,6 @@ public class MainActivity extends AppCompatActivity {
 		Log.e(TAG, "--- ON DESTROY ---");
 	}
 
-	/**
-	 * Sends a message.
-	 * @param message  A string of text to send.
-	 */
 	// The Handler that gets information back from the hrm service
 	private final Handler mHandler = new Handler() {
 		@Override
@@ -502,12 +498,19 @@ public class MainActivity extends AppCompatActivity {
 			return true;
 
 		case R.id.record:
-			isRecording=(isRecording ? false : true);
-			recordingTag=(isRecording ? ""+System.currentTimeMillis() : recordingTag);
-			Toast.makeText(mContext,
-					(isRecording ? R.string.recording_on :  R.string.recording_off),
-					Toast.LENGTH_LONG).show();
-			return true;
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                isRecording = !isRecording;
+                recordingTag = (isRecording ? "" + System.currentTimeMillis() : recordingTag);
+                Snackbar.make(view,
+                        (isRecording ? R.string.recording_on : R.string.recording_off),
+                        Snackbar.LENGTH_LONG).show();
+                return true;
+            } else {
+                Snackbar.make(view,"Cannot record without external storage permissions.",
+                        Snackbar.LENGTH_LONG).show();
+                return true;
+            }
 
 		case R.id.quit:
 			finish();
