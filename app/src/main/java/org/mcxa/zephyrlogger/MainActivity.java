@@ -48,20 +48,27 @@
 
 package org.mcxa.zephyrlogger;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 	 */
 	@BindView(R.id.status) TextView mStatus;
 	@BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.main_activity_view) LinearLayout view;
 
 	/*
 	 * Name of the connected device, and it's address
@@ -240,6 +248,50 @@ public class MainActivity extends AppCompatActivity {
 		return (mHxMAddress != null);
 	}
 
+    // Identifier for the permission request
+    private static final int WRITE_STORAGE_PERMISSIONS_REQUEST = 7;
+
+	public void getExternalStoragePermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // The permission is NOT already granted.
+            // Check if the user has been asked about this permission already and denied
+            // it. If so, we want to give more explanation about why the permission is needed.
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Show our own UI to explain to the user why we need to read the contacts
+                // before actually requesting the permission and showing the default UI
+                Snackbar.make(view,"This app requires external storage access to store logs.",
+                        Snackbar.LENGTH_LONG).show();
+            }
+
+            // Fire off an async request to actually get the permission
+            // This will show the standard permission request dialog UI
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    WRITE_STORAGE_PERMISSIONS_REQUEST);
+        }
+    }
+
+    // Callback with the request from calling requestPermissions(...)
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        // Make sure it's our original READ_CONTACTS request
+        if (requestCode == WRITE_STORAGE_PERMISSIONS_REQUEST) {
+            //if we didn't get the permission
+            if (!(grantResults.length == 1 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                Snackbar.make(view,"This app cannot function without external storage permissions.",
+                        Snackbar.LENGTH_LONG).show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
 	/*
 	 * Our onCreate() needs to setup the main activity that we will use to        
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -271,7 +323,12 @@ public class MainActivity extends AppCompatActivity {
 		if ( mStatus == null ) {
 			Toast.makeText(this, "Something went very wrong, missing resource, rebuild the application", Toast.LENGTH_LONG).show();
 			finish();
-		}            
+		}
+
+        /*
+         * Request external storage permissions
+         */
+        getExternalStoragePermissions();
 
 		/*
 		 * Put some initial information into our display until we have 
