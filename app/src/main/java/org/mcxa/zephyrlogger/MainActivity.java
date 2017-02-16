@@ -51,7 +51,6 @@ package org.mcxa.zephyrlogger;
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -66,7 +65,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -86,7 +84,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-	private Context mContext;
 	private boolean isRecording=false;
 	private String recordingTag;
 
@@ -153,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
 			System.exit(1);
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
+			Log.e(TAG, "Unsupported encoding exception thrown trying to write file");
 			e.printStackTrace();
             System.exit(1);
 		} catch (IOException e) {
@@ -300,8 +297,6 @@ public class MainActivity extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate");
-
-		mContext = getApplicationContext();
 
 		/*
 		 * Set our content view
@@ -513,6 +508,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
 		case R.id.quit:
+			//stop the service
+			mHxmService.stop();
 			finish();
 			return true;
 		}
