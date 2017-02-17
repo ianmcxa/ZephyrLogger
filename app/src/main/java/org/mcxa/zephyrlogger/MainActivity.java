@@ -51,8 +51,8 @@ package org.mcxa.zephyrlogger;
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -66,9 +66,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.mcxa.zephyrlogger.hxm.HrmReading;
 
@@ -174,8 +174,9 @@ public class MainActivity extends AppCompatActivity {
 		/*
 		 * Setup the service that will talk with the Hxm
 		 */
-		if (mHxmService == null) 
-			setupHrm();
+		if (mHxmService == null)
+			// Initialize the service to perform bluetooth connections
+			mHxmService = new HxmService(this, mHandler);
 
 		/*
 		 * Look for an Hxm to connect to, if none is found tell the user
@@ -251,19 +252,6 @@ public class MainActivity extends AppCompatActivity {
 	public void getExternalStoragePermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-
-            // The permission is NOT already granted.
-            // Check if the user has been asked about this permission already and denied
-            // it. If so, we want to give more explanation about why the permission is needed.
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                // Show our own UI to explain to the user why we need to read the contacts
-                // before actually requesting the permission and showing the default UI
-                Snackbar.make(view,"This app requires external storage access to store logs.",
-                        Snackbar.LENGTH_LONG).show();
-            }
-
             // Fire off an async request to actually get the permission
             // This will show the standard permission request dialog UI
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -310,16 +298,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.app_name);
 
-		/*
-		 *  Set up the status text view, if we can't do it something is wrong with
-		 *  how this application package was built, in that case display a message
-		 *  and give up.        
-		 */
-		if ( mStatus == null ) {
-			Toast.makeText(this, "Something went very wrong, missing resource, rebuild the application", Toast.LENGTH_LONG).show();
-			finish();
-		}
-
         /*
          * Request external storage permissions
          */
@@ -345,7 +323,15 @@ public class MainActivity extends AppCompatActivity {
 			/*
 			 * Blutoooth needs to be available on this device, and also enabled.  
 			 */
-			Toast.makeText(this, "Bluetooth is not available or not enabled", Toast.LENGTH_LONG).show();
+			final Snackbar snackbar = Snackbar.make(view,"Bluetooth is not available or not enabled",
+					Snackbar.LENGTH_INDEFINITE);
+			snackbar.setAction("Close", new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					snackbar.dismiss();
+				}
+			}).setActionTextColor(Color.WHITE);
+			snackbar.show();
 			mStatus.setText(R.string.noBluetooth);
 
 		} else {
@@ -402,31 +388,12 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	private void setupHrm() {
-		Log.d(TAG, "setupScale:");
-
-		// Initialize the service to perform bluetooth connections
-		mHxmService = new HxmService(this, mHandler);
-	}
-
-	@Override
-	public synchronized void onPause() {
-		super.onPause();
-		Log.e(TAG, "- ON PAUSE -");
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-		Log.e(TAG, "-- ON STOP --");
-	}
-
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		// Stop the Bluetooth chat services
+		Log.e(TAG, "Destroying activity. Stopping bluetooth service");
 		if (mHxmService != null) mHxmService.stop();
-		Log.e(TAG, "--- ON DESTROY ---");
 	}
 
 	// The Handler that gets information back from the hrm service
@@ -472,7 +439,8 @@ public class MainActivity extends AppCompatActivity {
 			}
 
 			case R.string.HXM_SERVICE_MSG_TOAST:
-				Toast.makeText(getApplicationContext(), msg.getData().getString(null),Toast.LENGTH_SHORT).show();
+				Snackbar snackbar = Snackbar.make(view, msg.getData().getString(null),
+						Snackbar.LENGTH_LONG);
 				break;
 			}
 		}
@@ -515,19 +483,6 @@ public class MainActivity extends AppCompatActivity {
 		}
 
 		return false;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d(TAG, "onActivityResult " + requestCode);
-
-		switch(requestCode)
-		{  
-
-		case 1:
-			break;
-
-		}             
 	}
 	
 	/****************************************************************************

@@ -17,7 +17,7 @@
     <string name="connectedTo">connected: </string>
     <string name="initializing">initializing</string>
     <string name="nonePaired">No Zephyr HxM devices have been paired?</string>
-    <string name="noBluetooth">No Bluetooth?</string>
+    <string name="noBluetooth">Status: Bluetooth Not Available</string>
     
     <!--
         Some identifiers used to pass information around our application 
