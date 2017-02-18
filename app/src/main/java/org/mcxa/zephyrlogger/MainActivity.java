@@ -95,6 +95,15 @@ public class MainActivity extends AppCompatActivity {
 	 */
 	private static final String TAG = "ZephyrLogger";
 
+	/**
+	 * CSV format for the file
+	 */
+	public static final String CSV_FORMAT = "timeInMs,stx,msgId,dlc,firmwareId,firmwareVersion,hardWareId," +
+			"hardwareVersion,batteryIndicator,heartRate,heartBeatNumber,hbTime1,hbTime2," +
+			"hbTime3,hbTime4,hbTime5,hbTime6,hbTime7,hbTime8,hbTime9,hbTime10,hbTime11," +
+			"hbTime12,hbTime13,hbTime14,hbTime15,reserved1,reserved2,reserved3,distance," +
+			"speed,strides,reserved4,reserved5,crc,etx,reserved5,crc,etx";
+
 	/*
 	 *  Layout Views
 	 */
@@ -149,10 +158,15 @@ public class MainActivity extends AppCompatActivity {
         //create a data file and write into it
 		File file = new File(zephyrlogFolder, "Zephyr_"+recordingTag+"_data.txt");
 		try {
+			FileWriter writer;
 			if(!file.exists()){
 				file.createNewFile();
+				writer = new FileWriter(file, true);
+				//if this is a new file, write the CSV format at the top
+				writer.write(CSV_FORMAT + "\n");
+			} else {
+				writer = new FileWriter(file, true);
 			}
-			FileWriter writer = new FileWriter(file, true);
 			writer.write(System.currentTimeMillis()+","+m.toString()+"\n");
 			writer.close();
 		} catch (FileNotFoundException e) {
