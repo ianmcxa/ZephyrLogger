@@ -58,10 +58,6 @@ import android.util.Log;
 public class HxmService {
     // Debugging
     private static final String TAG = "HrmService";
-            
-    // Unique UUID for use by this application, it is the generic & well-known SPP UID
-    @SuppressWarnings("unused")
-        private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     // Member fields
     private final BluetoothAdapter mAdapter;

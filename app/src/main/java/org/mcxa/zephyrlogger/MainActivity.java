@@ -78,6 +78,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.util.Locale;
 import java.util.Set;
 
@@ -160,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
 		try {
 			FileWriter writer;
 			if(!file.exists()){
-				file.createNewFile();
+				boolean created = file.createNewFile();
+				if (!created) throw new IOException("Could not create data file");
 				writer = new FileWriter(file, true);
 				//if this is a new file, write the CSV format at the top
 				writer.write(CSV_FORMAT + "\n");
@@ -421,65 +423,82 @@ public class MainActivity extends AppCompatActivity {
 		if (mHxmService != null) mHxmService.stop();
 	}
 
+	Handler mHandler = new MessageHandler(this);
+
 	// The Handler that gets information back from the hrm service
-	private final Handler mHandler = new Handler() {
+	private static class MessageHandler extends Handler {
+		private final WeakReference<MainActivity> activityReference;
+
+		MessageHandler(MainActivity activity) {
+			activityReference = new WeakReference<>(activity);
+		}
+
 		@Override
 		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case R.string.HXM_SERVICE_MSG_STATE: 
-				Log.d(TAG, "handleMessage():  MESSAGE_STATE_CHANGE: " + msg.arg1);
-				switch (msg.arg1) {
-				case R.string.HXM_SERVICE_CONNECTED:
-					if ((mStatus != null) && (mHxMName != null)) {
-						mStatus.setText(R.string.connectedTo);
-						mStatus.append(mHxMName);
-						//set button to start recording
-						mButton.setText(getResources().getString(R.string.start_record));
-						mButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_play, 0, 0, 0);
-					}
-					break;
+			MainActivity activity = activityReference.get();
+			if (activity != null) {
 
-				case R.string.HXM_SERVICE_CONNECTING:
-					mStatus.setText(R.string.connecting);
-					break;
+				switch (msg.what) {
+					case R.string.HXM_SERVICE_MSG_STATE:
+						Log.d(TAG, "handleMessage():  MESSAGE_STATE_CHANGE: " + msg.arg1);
+						switch (msg.arg1) {
+							case R.string.HXM_SERVICE_CONNECTED:
+								if ((activity.mStatus != null) && (activity.mHxMName != null)) {
+									activity.mStatus.setText(R.string.connectedTo);
+									activity.mStatus.append(activity.mHxMName);
+									//set button to start recording
+									activity.mButton.setText(activity.getResources()
+											.getString(R.string.start_record));
+									activity.mButton
+											.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
+								}
+								break;
 
-				case R.string.HXM_SERVICE_RESTING:
-					if (mStatus != null ) {
-						mStatus.setText(R.string.notConnected);
-						//set button to connect
-						mButton.setText(getResources().getString(R.string.connect));
-						mButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_connect, 0, 0, 0);
-						mHeartRate.setText("");
-						mBattery.setText("");
-						mRri.setText("");
-						mSpeed.setText("");
-					}
-					break;
-				}
-				break;
+							case R.string.HXM_SERVICE_CONNECTING:
+								activity.mStatus.setText(R.string.connecting);
+								break;
 
-			case R.string.HXM_SERVICE_MSG_READ: {
+							case R.string.HXM_SERVICE_RESTING:
+								if (activity.mStatus != null) {
+									activity.mStatus.setText(R.string.notConnected);
+									//set button to connect
+									activity.mButton.setText(activity.getResources()
+											.getString(R.string.connect));
+									activity.mButton
+											.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_connect, 0, 0, 0);
+									activity.mHeartRate.setText("");
+									activity.mBattery.setText("");
+									activity.mRri.setText("");
+									activity.mSpeed.setText("");
+								}
+								break;
+						}
+						break;
+
+					case R.string.HXM_SERVICE_MSG_READ: {
 				/*
 				 * MESSAGE_READ will have the byte buffer in tow, we take it, build an instance
 				 * of a HrmReading object from the bytes, and then display it into our view
 				 */
-				byte[] readBuf = (byte[]) msg.obj;
-				HrmReading hrm = new HrmReading( readBuf );
-				displayHrmReading(hrm);
+						byte[] readBuf = (byte[]) msg.obj;
+						HrmReading hrm = new HrmReading(readBuf);
+						activity.displayHrmReading(hrm);
 
-				if(isExternalStorageWritable() && isRecording){
-					exportData(hrm);
+						if (activity.isExternalStorageWritable() && activity.isRecording) {
+							activity.exportData(hrm);
+						}
+						break;
+					}
+
+					case R.string.HXM_SERVICE_MSG_TOAST:
+						String message = msg.getData().getString(null);
+						if (message != null)
+							Snackbar.make(activity.view, message, Snackbar.LENGTH_LONG).show();
+						break;
 				}
-				break;
-			}
-
-			case R.string.HXM_SERVICE_MSG_TOAST:
-				Snackbar snackbar = Snackbar.make(view, msg.getData().getString(null),
-						Snackbar.LENGTH_LONG);
-				break;
 			}
 		}
-	};
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -509,7 +528,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	@OnClick(R.id.main_button)
-	public void onMainButtonCLicked(AppCompatButton button) {
+	public void onMainButtonCLicked() {
 		if (mHxmService == null || mHxmService.getState() != R.string.HXM_SERVICE_CONNECTED)
 			connectToHxm();
 		else startStopRecording();
