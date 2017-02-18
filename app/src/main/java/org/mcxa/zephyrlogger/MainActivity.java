@@ -78,6 +78,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Locale;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -101,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
 	@BindView(R.id.toolbar) Toolbar toolbar;
 	@BindView(R.id.main_button) AppCompatButton mButton;
     @BindView(R.id.main_activity_view) RelativeLayout view;
+
+	//our text views for displaying data
+	@BindView(R.id.heart_rate) TextView mHeartRate;
+	@BindView(R.id.rri) TextView mRri;
+	@BindView(R.id.battery) TextView mBattery;
+	@BindView(R.id.speed) TextView mSpeed;
 
 	/*
 	 * Name of the connected device, and it's address
@@ -428,10 +435,10 @@ public class MainActivity extends AppCompatActivity {
 						//set button to connect
 						mButton.setText(getResources().getString(R.string.connect));
 						mButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_connect, 0, 0, 0);
-						display(R.id.heart_rate, "");
-						display(R.id.battery, "");
-						display(R.id.rri, "");
-						display(R.id.speed, "");
+						mHeartRate.setText("");
+						mBattery.setText("");
+						mRri.setText("");
+						mSpeed.setText("");
 					}
 					break;
 				}
@@ -518,29 +525,59 @@ public class MainActivity extends AppCompatActivity {
 
 	}
 
+	/**
+	 * Calculate the average RRi in milliseconds per packet recieved
+	 * @param h HrmReading object
+	 * @return the average RRi in ms from the recieved packet
+     */
 	private Long calcRRi(HrmReading h) {
 		Long interval = 0L;
+		/* Note that each heart beat is a value from 0 to 65535. The value rolls over
+		 * at 65535, so when we have a large enough difference (I'm using 10000), we know that
+		 * a rollover occured and we need to subtract 65535 from the result
+		 */
+
+		Long tmp = Math.abs(h.hbTime15 - h.hbTime14);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
 		//yeah this would probably be easier with a loop, but idk how to do that without
 		//shoving all the hbTime things in an array and thus copying them needlessly
-		interval += (Long) h.hbTime15 - (Long) h.hbTime14;
-		interval += (Long) h.hbTime14 - (Long) h.hbTime13;
-		interval += (Long) h.hbTime13 - (Long) h.hbTime12;
-		interval += (Long) h.hbTime12 - (Long) h.hbTime11;
-		interval += (Long) h.hbTime11 - (Long) h.hbTime10;
-		interval += (Long) h.hbTime10 - (Long) h.hbTime9;
-		interval += (Long) h.hbTime9 - (Long) h.hbTime8;
-		interval += (Long) h.hbTime8 - (Long) h.hbTime7;
-		interval += (Long) h.hbTime7 - (Long) h.hbTime6;
-		interval += (Long) h.hbTime6 - (Long) h.hbTime5;
-		interval += (Long) h.hbTime5 - (Long) h.hbTime4;
-		interval += (Long) h.hbTime4 - (Long) h.hbTime3;
-		interval += (Long) h.hbTime3 - (Long) h.hbTime2;
-		interval += (Long) h.hbTime2 - (Long) h.hbTime1;
+		tmp = Math.abs(h.hbTime14 - h.hbTime13);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime13 - h.hbTime12);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime12 - h.hbTime11);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime11 - h.hbTime10);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime10 - h.hbTime9);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime9 - h.hbTime8);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime8 - h.hbTime7);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime7 - h.hbTime6);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime6 - h.hbTime5);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime5 - h.hbTime4);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime4 - h.hbTime3);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime3 - h.hbTime2);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
+		tmp = Math.abs(h.hbTime2 - h.hbTime1);
+		interval += (tmp > 10000L) ? Math.abs(tmp - 65535) : tmp;
 
-		if (interval > 65535L)
-			return interval - 65535L;
-		else
-			return interval;
+		return interval/14;
+	}
+
+	/**
+	 * Calculate speed which is measured in 1/256m/s blocks
+	 * @param h HrmReading object
+	 * @return Double containing speed
+     */
+	private Double calcSpeed(HrmReading h) {
+		return ((double) h.speed)/256;
 	}
 
 	/****************************************************************************
@@ -548,82 +585,9 @@ public class MainActivity extends AppCompatActivity {
 	 * activity's view
 	 ****************************************************************************/	
 	private void displayHrmReading(HrmReading h){
-		display(R.id.heart_rate, h.heartRate);
-		display(R.id.battery, h.batteryIndicator);
-		display(R.id.speed, h.speed);
-		display(R.id.rri, calcRRi(h));
-
-		/*display ( R.id.stx,  h.stx );
-		display ( R.id.msgId,  h.msgId );
-		display ( R.id.dlc,  h.dlc );
-		display ( R.id.firmwareId,   h.firmwareId );
-		display ( R.id.firmwareVersion,   h.firmwareVersion );
-		display ( R.id.hardwareId,   h.hardWareId );
-		display ( R.id.hardwareVersion,   h.hardwareVersion );
-		display ( R.id.batteryChargeIndicator,  h.batteryIndicator );
-		display ( R.id.heartRate, h.heartRate );
-		display ( R.id.heartBeatNumber,  h.heartBeatNumber );
-		display ( R.id.hbTimestamp1,   h.hbTime1 );
-		display ( R.id.hbTimestamp2,   h.hbTime2 );
-		display ( R.id.hbTimestamp3,   h.hbTime3 );
-		display ( R.id.hbTimestamp4,   h.hbTime4 );
-		display ( R.id.hbTimestamp5,   h.hbTime5 );
-		display ( R.id.hbTimestamp6,   h.hbTime6 );
-		display ( R.id.hbTimestamp7,   h.hbTime7 );
-		display ( R.id.hbTimestamp8,   h.hbTime8 );
-		display ( R.id.hbTimestamp9,   h.hbTime9 );
-		display ( R.id.hbTimestamp10,   h.hbTime10 );
-		display ( R.id.hbTimestamp11,   h.hbTime11 );
-		display ( R.id.hbTimestamp12,   h.hbTime12 );
-		display ( R.id.hbTimestamp13,   h.hbTime13 );
-		display ( R.id.hbTimestamp14,   h.hbTime14 );
-		display ( R.id.hbTimestamp15,   h.hbTime15 );
-		display ( R.id.reserved1,   h.reserved1 );
-		display ( R.id.reserved2,   h.reserved2 );
-		display ( R.id.reserved3,   h.reserved3 );
-		display ( R.id.distance,   h.distance );
-		display ( R.id.speed,   h.speed );
-		display ( R.id.strides,  (int)h.strides );
-		display ( R.id.reserved4,  h.reserved4 );
-		display ( R.id.reserved5,  h.reserved5 );
-		display ( R.id.crc,  h.crc );
-		display ( R.id.etx,  h.etx ); */
+		mHeartRate.setText(String.format(Locale.US, "%d bpm", h.heartRate));
+		mBattery.setText(String.format(Locale.US, "%d %%", h.batteryIndicator));
+		mRri.setText(String.format(Locale.US, "%d ms", calcRRi(h)));
+		mSpeed.setText(String.format(Locale.US, "%.1f m/s", calcSpeed(h)));
 	}
-	
-	/*
-	 * display a byte value
-	 */
-	private void display  ( int nField, byte d ) {   
-		String INT_FORMAT = "%x";
-		String s = String.format(INT_FORMAT, d);
-		display( nField, s  );
-	}
-
-	/*
-	 * display an integer value
-	 */
-	private void display  ( int nField, int d ) {   
-		String INT_FORMAT = "%d";
-		String s = String.format(INT_FORMAT, d);
-		display( nField, s  );
-	}
-
-	/*
-	 * display a long integer value
-	 */
-	private void display  ( int nField, long d ) {   
-		String INT_FORMAT = "%d";
-		String s = String.format(INT_FORMAT, d);
-		display( nField, s  );
-	}
-
-	/*
-	 * display a character string
-	 */
-	private void display ( int nField, CharSequence  str  ) {
-		TextView tvw = ButterKnife.findById(view, nField);
-		if ( tvw != null )
-			tvw.setText(str);
-	}
-	
 }

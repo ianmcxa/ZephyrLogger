@@ -28,6 +28,10 @@
     <string name="noBluetooth">Bluetooth Not Available</string>
 
     <string name="divider">This is a content divider</string>
+    <string name="heart_icon">This is a heart icon</string>
+    <string name="battery_icon">This is a battery icon</string>
+    <string name="rri_icon">This is a pulse icon</string>
+    <string name="speed_icon">This is a speed icon</string>
     
     <!--
         Some identifiers used to pass information around our application 
