@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="recording_on">Recording activated</string>
-    <string name="recording_off">Recording deactivated</string>
+    <string name="recording_on">Recording started</string>
+    <string name="recording_off">Recording stopped</string>
     
     <string name="app_name">ZephyrLogger</string>
-    <string name="menu_settings">Settings</string>
     <string name="menu_connect">Connect to HxM</string>
-    <string name="menu_activate">Activate/Deactivate recording</string>
+    <string name="menu_activate">Start/Stop recording</string>
     <string name="menu_quit">Quit</string>
 
     <string name="status">Status:</string>
@@ -27,6 +26,8 @@
     <string name="initializing">initializing</string>
     <string name="nonePaired">No Zephyr HxM devices have been paired</string>
     <string name="noBluetooth">Bluetooth Not Available</string>
+
+    <string name="divider">This is a content divider</string>
     
     <!--
         Some identifiers used to pass information around our application 

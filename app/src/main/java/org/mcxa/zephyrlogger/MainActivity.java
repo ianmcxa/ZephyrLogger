@@ -62,12 +62,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.mcxa.zephyrlogger.hxm.HrmReading;
@@ -81,6 +82,7 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -97,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
 	 */
 	@BindView(R.id.status) TextView mStatus;
 	@BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.main_activity_view) LinearLayout view;
+	@BindView(R.id.main_button) AppCompatButton mButton;
+    @BindView(R.id.main_activity_view) RelativeLayout view;
 
 	/*
 	 * Name of the connected device, and it's address
@@ -333,6 +336,8 @@ public class MainActivity extends AppCompatActivity {
 			}).setActionTextColor(Color.WHITE);
 			snackbar.show();
 			mStatus.setText(R.string.noBluetooth);
+			//disable button
+			mButton.setEnabled(false);
 
 		} else {
 			/*
@@ -342,7 +347,6 @@ public class MainActivity extends AppCompatActivity {
 				mStatus.setText(R.string.btNotEnabled);
 				Log.d(TAG, "onStart: Blueooth adapter detected, but it's not enabled");
 			} else {
-				mStatus.setText(R.string.connecting);
 				connectToHxm();
 			}
 		}        
@@ -408,6 +412,9 @@ public class MainActivity extends AppCompatActivity {
 					if ((mStatus != null) && (mHxMName != null)) {
 						mStatus.setText(R.string.connectedTo);
 						mStatus.append(mHxMName);
+						//set button to start recording
+						mButton.setText(getResources().getString(R.string.start_record));
+						mButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_play, 0, 0, 0);
 					}
 					break;
 
@@ -418,6 +425,13 @@ public class MainActivity extends AppCompatActivity {
 				case R.string.HXM_SERVICE_RESTING:
 					if (mStatus != null ) {
 						mStatus.setText(R.string.notConnected);
+						//set button to connect
+						mButton.setText(getResources().getString(R.string.connect));
+						mButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_connect, 0, 0, 0);
+						display(R.id.heart_rate, "");
+						display(R.id.battery, "");
+						display(R.id.rri, "");
+						display(R.id.speed, "");
 					}
 					break;
 				}
@@ -461,20 +475,8 @@ public class MainActivity extends AppCompatActivity {
 			return true;
 
 		case R.id.record:
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                isRecording = !isRecording;
-                recordingTag = (isRecording ? "" + System.currentTimeMillis() : recordingTag);
-                Snackbar.make(view,
-                        (isRecording ? R.string.recording_on : R.string.recording_off),
-                        Snackbar.LENGTH_LONG).show();
-                return true;
-            } else {
-                Snackbar.make(view,"Cannot record without external storage permissions.",
-                        Snackbar.LENGTH_LONG).show();
-                return true;
-            }
-
+			startStopRecording();
+			return true;
 		case R.id.quit:
 			//stop the service
 			mHxmService.stop();
@@ -484,13 +486,74 @@ public class MainActivity extends AppCompatActivity {
 
 		return false;
 	}
-	
+
+	@OnClick(R.id.main_button)
+	public void onMainButtonCLicked(AppCompatButton button) {
+		if (mHxmService == null || mHxmService.getState() != R.string.HXM_SERVICE_CONNECTED)
+			connectToHxm();
+		else startStopRecording();
+	}
+
+	private void startStopRecording() {
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+				== PackageManager.PERMISSION_GRANTED) {
+			isRecording = !isRecording;
+			recordingTag = (isRecording ? "" + System.currentTimeMillis() : recordingTag);
+			Snackbar.make(view,
+					(isRecording ? R.string.recording_on : R.string.recording_off),
+					Snackbar.LENGTH_SHORT).show();
+
+			//set button to start or stop recording
+			if (isRecording) {
+				mButton.setText(getResources().getString(R.string.stop_record));
+				mButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_stop, 0, 0, 0);
+			} else {
+				mButton.setText(getResources().getString(R.string.start_record));
+				mButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_play, 0, 0, 0);
+			}
+		} else {
+			Snackbar.make(view,"Cannot record without external storage permissions.",
+					Snackbar.LENGTH_LONG).show();
+		}
+
+	}
+
+	private Long calcRRi(HrmReading h) {
+		Long interval = 0L;
+		//yeah this would probably be easier with a loop, but idk how to do that without
+		//shoving all the hbTime things in an array and thus copying them needlessly
+		interval += (Long) h.hbTime15 - (Long) h.hbTime14;
+		interval += (Long) h.hbTime14 - (Long) h.hbTime13;
+		interval += (Long) h.hbTime13 - (Long) h.hbTime12;
+		interval += (Long) h.hbTime12 - (Long) h.hbTime11;
+		interval += (Long) h.hbTime11 - (Long) h.hbTime10;
+		interval += (Long) h.hbTime10 - (Long) h.hbTime9;
+		interval += (Long) h.hbTime9 - (Long) h.hbTime8;
+		interval += (Long) h.hbTime8 - (Long) h.hbTime7;
+		interval += (Long) h.hbTime7 - (Long) h.hbTime6;
+		interval += (Long) h.hbTime6 - (Long) h.hbTime5;
+		interval += (Long) h.hbTime5 - (Long) h.hbTime4;
+		interval += (Long) h.hbTime4 - (Long) h.hbTime3;
+		interval += (Long) h.hbTime3 - (Long) h.hbTime2;
+		interval += (Long) h.hbTime2 - (Long) h.hbTime1;
+
+		if (interval > 65535L)
+			return interval - 65535L;
+		else
+			return interval;
+	}
+
 	/****************************************************************************
 	 * Some utility functions to control the formatting of HxM fields into the 
 	 * activity's view
 	 ****************************************************************************/	
 	private void displayHrmReading(HrmReading h){
-		display ( R.id.stx,  h.stx );
+		display(R.id.heart_rate, h.heartRate);
+		display(R.id.battery, h.batteryIndicator);
+		display(R.id.speed, h.speed);
+		display(R.id.rri, calcRRi(h));
+
+		/*display ( R.id.stx,  h.stx );
 		display ( R.id.msgId,  h.msgId );
 		display ( R.id.dlc,  h.dlc );
 		display ( R.id.firmwareId,   h.firmwareId );
@@ -524,7 +587,7 @@ public class MainActivity extends AppCompatActivity {
 		display ( R.id.reserved4,  h.reserved4 );
 		display ( R.id.reserved5,  h.reserved5 );
 		display ( R.id.crc,  h.crc );
-		display ( R.id.etx,  h.etx );   
+		display ( R.id.etx,  h.etx ); */
 	}
 	
 	/*
@@ -558,7 +621,7 @@ public class MainActivity extends AppCompatActivity {
 	 * display a character string
 	 */
 	private void display ( int nField, CharSequence  str  ) {
-		TextView tvw = (TextView) findViewById(nField);
+		TextView tvw = ButterKnife.findById(view, nField);
 		if ( tvw != null )
 			tvw.setText(str);
 	}
