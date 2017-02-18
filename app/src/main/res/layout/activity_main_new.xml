@@ -1,108 +1,150 @@
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/main_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/main_linear_layout"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/primary"
-            android:minHeight="?attr/actionBarSize"
-            app:titleTextColor="@android:color/white"/>
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="@android:color/white" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:textSize="20sp"
-            android:text="Status: -"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:text="To begin press connect"
-            android:drawableEnd="@drawable/ic_connect_dark"
-            android:drawableRight="@drawable/ic_connect_dark"
-            />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/status"
+        android:textSize="20sp"
+        android:id="@+id/status_label"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="center"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/divider"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="24dp">
-
-            <TextView
-                android:id="@+id/heart_rate_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:text="Heart Rate:"
-                />
-
-            <TextView
-                android:id="@+id/rri_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="180dp"
-                android:text="RRi: "
-                />
-
-            <TextView
-                android:id="@+id/battery_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_below="@id/heart_rate_text"
-                android:layout_marginTop="16dp"
-                android:text="Battery:"
-                />
-
-            <TextView
-                android:id="@+id/speed_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Speed: "
-                android:layout_below="@id/rri_text"
-                android:layout_marginTop="16dp"
-                android:layout_alignLeft="@id/rri_text"
-                android:layout_alignStart="@id/rri_text" />
-        </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/status_label"
+        android:layout_toRightOf="@+id/status_label"
+        android:layout_toEndOf="@+id/status_label"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/status" />
 
 
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:scaleType="center"
+        android:layout_below="@+id/status_label"
+        android:src="@drawable/divider" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_connect"
-        app:layout_anchor="@id/main_linear_layout"
-        app:layout_anchorGravity="bottom|right|end" />
 
-</android.support.design.widget.CoordinatorLayout>
+    <TextView
+        android:id="@+id/heart_rate_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider1"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/heart_rate"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/heart_rate_label"
+        android:layout_toRightOf="@+id/heart_rate_label"
+        android:layout_toEndOf="@+id/heart_rate_label"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/heart_rate" />
+
+
+    <TextView
+        android:id="@+id/rri_label"
+        android:layout_alignBaseline="@+id/heart_rate_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="220dp"
+        android:layout_marginStart="220dp"
+        android:text="@string/rri"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/rri_label"
+        android:layout_toRightOf="@+id/rri_label"
+        android:layout_toEndOf="@+id/rri_label"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/rri" />
+
+    <TextView
+        android:id="@+id/battery_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/heart_rate_label"
+        android:layout_alignStart="@id/heart_rate_label"
+        android:layout_alignLeft="@id/heart_rate_label"
+        android:layout_marginTop="16dp"
+        android:text="@string/battery"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/battery_label"
+        android:layout_toRightOf="@+id/battery_label"
+        android:layout_toEndOf="@+id/battery_label"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/battery" />
+
+    <TextView
+        android:id="@+id/speed_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/rri_label"
+        android:layout_alignStart="@id/rri_label"
+        android:layout_below="@id/rri_label"
+        android:layout_marginTop="16dp"
+        android:text="@string/speed"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/speed_label"
+        android:layout_toRightOf="@+id/speed_label"
+        android:layout_toEndOf="@+id/speed_label"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/speed" />
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/main_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/connect"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_marginBottom="16dp"
+        android:drawableRight="@drawable/ic_connect"
+        android:drawableEnd="@drawable/ic_connect"
+        />
+</RelativeLayout>

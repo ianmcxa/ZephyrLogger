@@ -10,14 +10,23 @@
     <string name="menu_activate">Activate/Deactivate recording</string>
     <string name="menu_quit">Quit</string>
 
+    <string name="status">Status:</string>
+    <string name="heart_rate">Heart Rate:</string>
+    <string name="rri">RRi:</string>
+    <string name="battery">Battery:</string>
+    <string name="speed">Speed:</string>
+
+    <string name="connect">Connect</string>
+    <string name="start_record">Start Recording</string>
+    <string name="stop_record">Stop Recording</string>
 
     <string name="notConnected">You are not connected to a Zephyr HxM</string>
     <string name="btNotEnabled">Bluetooth not enabled.</string>
     <string name="connecting">connecting...</string>
     <string name="connectedTo">connected: </string>
     <string name="initializing">initializing</string>
-    <string name="nonePaired">No Zephyr HxM devices have been paired?</string>
-    <string name="noBluetooth">Status: Bluetooth Not Available</string>
+    <string name="nonePaired">No Zephyr HxM devices have been paired</string>
+    <string name="noBluetooth">Bluetooth Not Available</string>
     
     <!--
         Some identifiers used to pass information around our application 
