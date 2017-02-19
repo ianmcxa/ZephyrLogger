@@ -35,7 +35,8 @@
     <string name="speed_icon">This is a speed icon</string>
 
     <string name="about_header">About ZypherLogger</string>
-    <string name="about_contents">ZephyrLogger connects to the Zypher HxM heart rate monitor and logs the data from the device directly to a text file.
+    <string name="about_contents">
+        ZephyrLogger connects to the Zypher HxM heart rate monitor and logs the data from the device directly to a text file.
         \n\nZephyrLogger is licensed under the Apache 2.0 license. The source code is available on Github.
         \n\nThe app is based on a project the Pye Brook Company and was originally created by Christian Orthmann. It is now maintained by Ian Mcxa</string>
     <string name="icon">This is the app icon</string>
