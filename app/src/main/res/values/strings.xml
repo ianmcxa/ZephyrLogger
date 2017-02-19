@@ -3,10 +3,11 @@
 
     <string name="recording_on">Recording started</string>
     <string name="recording_off">Recording stopped</string>
-    
+
     <string name="app_name">ZephyrLogger</string>
     <string name="menu_connect">Connect to HxM</string>
     <string name="menu_activate">Start/Stop recording</string>
+    <string name="menu_about">About</string>
     <string name="menu_quit">Quit</string>
 
     <string name="status">Status:</string>
@@ -32,7 +33,13 @@
     <string name="battery_icon">This is a battery icon</string>
     <string name="rri_icon">This is a pulse icon</string>
     <string name="speed_icon">This is a speed icon</string>
-    
+
+    <string name="about_header">About ZypherLogger</string>
+    <string name="about_contents">ZephyrLogger connects to the Zypher HxM heart rate monitor and logs the data from the device directly to a text file.
+        \n\nZephyrLogger is licensed under the Apache 2.0 license. The source code is available on Github.
+        \n\nThe app is based on a project the Pye Brook Company and was originally created by Christian Orthmann. It is now maintained by Ian Mcxa</string>
+    <string name="icon">This is the app icon</string>
+
     <!--
         Some identifiers used to pass information around our application 
         Defining them within this resource ensures that each value is unique 
@@ -43,7 +50,7 @@
     <string name="HXM_SERVICE_MSG_READ">HXM_SERVICE_MSG_READ: message from HxM service with data read from the device</string>
     <string name="HXM_SERVICE_MSG_DEVICE_NAME">HXM_SERVICE_MSG_DEVICE_NAME: message from HxM service indicating the name of the device that a connection is associated with</string>
     <string name="HXM_SERVICE_MSG_TOAST">HXM_SERVICE_MSG_TOAST: message from HxM service requesting a toast be shown to the user</string>
-        
+
     <string name="HXM_SERVICE_RESTING">HXM_SERVICE_RESTING: HxM service is at rest</string>
     <string name="HXM_SERVICE_CONNECTING">HXM_SERIVICE_CONNECTING: HxM service is trying to connect to an HxM</string>
     <string name="HXM_SERVICE_CONNECTED">HXM_SERVICE_CONNECTED: HxM service is connected to a HxM</string>

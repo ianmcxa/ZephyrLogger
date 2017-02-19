@@ -7,8 +7,12 @@
      <item
          android:id="@+id/record"
          android:title="@string/menu_activate"/>
-     
-     <item
+
+    <item
+        android:id="@+id/about"
+        android:title="@string/menu_about"/>
+
+    <item
          android:id="@+id/quit"
          android:title="@string/menu_quit" />
 </menu>

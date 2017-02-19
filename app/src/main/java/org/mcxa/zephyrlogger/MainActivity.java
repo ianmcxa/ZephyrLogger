@@ -51,6 +51,7 @@ package org.mcxa.zephyrlogger;
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -517,6 +518,12 @@ public class MainActivity extends AppCompatActivity {
 		case R.id.record:
 			startStopRecording();
 			return true;
+
+		case R.id.about:
+			Intent i = new Intent(this, AboutActivity.class);
+			startActivity(i); // brings up the second activity
+			return true;
+
 		case R.id.quit:
 			//stop the service
 			mHxmService.stop();
@@ -529,7 +536,9 @@ public class MainActivity extends AppCompatActivity {
 
 	@OnClick(R.id.main_button)
 	public void onMainButtonCLicked() {
-		if (mHxmService == null || mHxmService.getState() != R.string.HXM_SERVICE_CONNECTED)
+		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled())
+			Log.d(TAG, "Unable to connect, bluetooth unavailable or not enabled");
+		else if (mHxmService == null || mHxmService.getState() != R.string.HXM_SERVICE_CONNECTED)
 			connectToHxm();
 		else startStopRecording();
 	}
